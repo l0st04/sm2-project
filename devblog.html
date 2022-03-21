@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEVBLOG #1 - Weapon attachments system re-write - sm²</title>
+    <link rel="stylesheet" href="100k.css">
+    <link rel="icon" href="Images/icon.png">
+</head>
+<body>
+    <nav class="nav-bar">
+        <img id="nav-logo" src="Images/menu-logo.png">
+        <a class="nav-bar-items" href="https://sm2.gg/discord">DISCORD</a>
+        <a class="nav-bar-items" href="assets.html">ASSETS</a>
+        <a class="nav-bar-items" href="news.html">NEWS</a>
+        <a class="nav-bar-items" href="index.html">HOME</a>
+    </nav>
+    
+<!-- Navigation Bar ^ -->
+
+<div id="center-div">
+    <div class="left-panel">
+        <img src="Images/devblog.jpg" class="images">
+        <pre id="date"><a href="https://sm2.gg/2021/10/" class="date-links">October 5, 2021</a>   /   By <a href="https://sm2.gg/author/sass/" class="date-links"> sass</a></pre>
+        <h1 class="left-h1" style="font-size: 25px; font-weight: bolder; margin-top: 35px;">DEVBLOG #1 – WEAPON ATTACHMENTS SYSTEM RE-WRITE</h1>
+        <div class="left-blue-lines"></div>
+        <p>Despite the arguable lack of footage during the past month, <strong>we’re still hard at work</strong> on the project and working on different features of the game. However, <strong>some things we work on are hardly showcase-able</strong>, which is why we’re reaching out about some features via a<strong> blog post</strong> instead! You can expect more of these as time goes on, as a way to show you what’s happening behind the scenes.</p>
+
+        <p>On this page, we’ll talk attachments; <strong>Attachments are a given in Call of Duty games</strong>, but they’re not always as simple to implement as one could imagine, not in our case at least. During the past few months, we had to put alot of work into <strong>redoing the entire attachment system from scratch</strong>. In this post, we’ll explain <strong>how and why</strong> we had this part of the Modern Warfare 2 engine redone!</p>
+        <div class="three-dots-align"><p class="three-dots">.</p> <p class="three-dots">.</p> <p class="three-dots">.</p></div>
+        <br><br>
+
+        <h1 class="left-h1">> TECHNICAL LIMITATIONS</h1>
+        <p><strong>One thing that is important to know</strong> is that IW4 <em>– aka “the MW2 engine” –</em> is a <strong>32-bit application</strong>, which makes sense considering the release date of the game, when 32-bit Operating Systems were still at large. But there’s one catch: 32-bit apps <strong>can only allocate 4GB of memory (RAM)</strong>, and with that comes its share of pros and cons.</p>
+
+        <p><strong>The good side</strong> of 32-bit applications is the<strong> lower memory usage</strong> across the board, and of course the compatibility with 32-bit Operating Systems<em> (which you shouldn’t use anymore in this day and age, but I digress</em>). <strong>The bad side</strong> however is that you have to work with a <strong>tighter memory pool</strong>, which means you have to <strong>optimize the work load as much as possible</strong>. And believe it or not, attachments play a massive role in this, and here’s why:</p>
+            <div class="three-dots-align"><p class="three-dots">.</p> <p class="three-dots">.</p> <p class="three-dots">.</p></div>
+            <br><br>
+
+            <h1 class="left-h1">> HOW ATTACHMENTS WORKS ON IW4</h1>
+            <p><strong>In a nutshell</strong>, the game uses a lot of <strong>different asset types</strong>, such as animations, models, script and HUD files, to name a few “simple” ones. One of these types is what we refer to as “<strong>weapons</strong>“. These “<strong>weapons</strong>” aren’t actually the visible part of them, but are rather <strong>entries with all the information about them</strong>, such a stats, names, the sounds they play, the animations and models they’re using, and a whole lot more.</p>
+
+            <p>In the original Modern Warfare 2 game, <strong>each and every gun + attachment combo is its own “weapon”</strong>. For example, a <strong>stock AK47</strong>, an <strong>AK47 with a silencer</strong>, and an <strong>AK47 with Extended Mags and ACOG</strong> are all considered <strong>unique</strong>, so each and every one of them have their own entry. <strong>The game then proceeds to “precache” every one of these entries</strong>, so it can then give you your actual weapon during a match.</p>
+
+            <p>This system worked in the original game, given the number of weapon assets is <strong>below the engine’s limit <em>(originally 1200)</em></strong>. But with the <strong>amount of weapons sm² has</strong>, we would go wayyyy past that limit if we were to use the same system, and <strong>simply cranking it up would result in the game running out of its 4GB of allocated memory and crash</strong>. So we had to figure out another way.</p>
+            <div class="three-dots-align"><p class="three-dots">.</p> <p class="three-dots">.</p> <p class="three-dots">.</p></div>
+
+            <h1 class="left-h1">> DYNAT WHO?</h1>
+            <p>Introducing <strong>DYNAT</strong>, our own approach of solving this problem, <strong>inspired by the system </strong>used in more <strong>recent COD games</strong>.</p>
+
+            <p><strong>DYNAT</strong><em> (short for <strong>DYN</strong>amic<strong> AT</strong>tachments)</em> is a <strong>new system that will dynamically create the weapon on-demand</strong>, rather than precaching every single possible weapon + attachments combo at once. That way, <strong>each gun will have a base “weapon” asset</strong>, on which DYNAT will be able to <strong>“build” the rest of the weapon</strong> over before precaching it.</p>
+
+            <p>Then, <strong>every attachment</strong> is now distributed via a completely separate file. These files contain properties such as models to add to the gun <em>(e.g a red dot sight, grip, etc..)</em>, where to place said models, eventual animation changes, stats tweaks, and more. Want a FAMAS with a Red Dot Sight and a Silencer? <strong>DYNAT </strong>will take the <strong>base FAMAS</strong> weapon asset, load the related <strong>Red Dot </strong>and <strong>Silencer </strong>properties, <strong>build </strong>the complete weapon, precache it, and finally<strong> give it to you</strong>.</p>
+
+            <p>Such a system allows us to drastically <strong>reduce the usage of weapon assets</strong>, and ensure that the game would <strong>not suffer from the engine’s limitations</strong>. This is a <strong>mandatory </strong>piece of work, and quite a<strong> time-consuming </strong>one as it requires a heavy amount of <strong>engine patching and engineering</strong>; In fact, <strong>DYNAT </strong>has been in preparation<strong> for a few months</strong> now.<br><br><strong>As a comparison</strong>, you can see <strong>in the picture below the difference</strong> of weapon assets usage; where the old system <em>(left)</em> required <strong>dozens of files</strong> for just one weapon, <strong>DYNAT </strong><em>(right)</em> allows the game to <strong>only use a single file</strong>.</p>
+
+            <img src="Images/devblog1.png" class="images" style="width: 400px; margin-left: 200px;"><br><br>
+            <div class="three-dots-align"><p class="three-dots">.</p> <p class="three-dots">.</p> <p class="three-dots">.</p></div>
+
+            <h1 class="left-h1">> CONCLUSION & PICTURES</h1>
+            <p>This is a <strong>perfect example</strong> of all the <strong>work that’s required</strong> for the project. <strong>Engine-related work</strong> is always necessary to <strong>add features</strong>, <strong>rework some already implemented systems</strong> that don’t suit our needs anymore, and ensure the <strong>stability of the game’s client</strong>. This is not the kind of work that’s easy to show off, but it’s <strong>mandatory </strong>regardless!</p>
+
+            <p>And as a little treat, here’s some pictures of a few DYNAT’d weapons you’ll be able to toy with in sm²!</p>
+            <div class="three-dots-align"><p class="three-dots">.</p> <p class="three-dots">.</p> <p class="three-dots">.</p></div>
+
+            <img src="Images/devblog2.png" class="images">
+            <figcaption class="caption"><em>MSMC w/ ACOG Scope</em></figcaption>
+
+            <img src="Images/devblog3.png" class="images">
+            <figcaption class="caption"><em>Honey Badger w/ Holographic sight</em></figcaption>
+
+            <img src="Images/devblog4.png" class="images">
+            <figcaption class="caption"><em>Galil w/ Reflex Sight</em></figcaption>
+
+            <img src="Images/devblog5.png" class="images">
+            <figcaption class="caption"><em>AK74u w/ Silencer and ELO Sight</em></figcaption>
+     <!-- Last Text -->
+     <p id="last-text">Stay up to date with sm² on <a class="last-links" href="https://sm2.gg/discord">Discord</a>, <a class="last-links" href="https://sm2.gg/twitter">Twitter</a>, and <a class="last-links" href="https://sm2.gg/youtube">YouTube!</a></p>
+
+            
+    </div>
+
+    <div class="right-panel">
+        <h3 class="right-h3">RECENT POSTS</h3>
+        <div class="blue-lines"></div><br>
+        <a href="100k.html" class="links">100,000 MEMBERS… 100,000<br> FRIENDS</a>
+        <a href="devblog.html" class="links">DEVBLOG #1 – WEAPON<br> ATTACHMENTS SYSTEM RE-<br>WRITE</a>
+        <a href="weapons.html" class="links">CONFIRMED WEAPONS LIST</a>
+        <a href="https://sm2.gg/progression-and-unlocks/" class="links">PROGRESSION AND UNLOCKS</a>
+        <a href="https://sm2.gg/faq/" class="links">FREQUENTLY ASKED<br> QUESTIONS</a><br><br>
+        
+        <h3 class="right-h3">BY MONTH</h3>
+        <div class="blue-lines"></div><br>
+        <a href="https://sm2.gg/2022/02/" class="links">FEBRUARY 2022</a>
+        <a href="https://sm2.gg/2021/10/" class="links">OCTOBER 2021</a>
+        <a href="https://sm2.gg/2021/06/" class="links">JUNE 2021</a>
+        <a href="https://sm2.gg/2021/04/" class="links">APRIL 2021</a><br><br>
+
+        <h3 class="right-h3">CATEGORIES</h3>
+        <div class="blue-lines"></div><br>
+        <a href="https://sm2.gg/category/info/" class="links">INFO</a>
+        <a href="https://sm2.gg/category/updates/" class="links">UPDATES</a>
+    </div>
+
+    
+</div>
+
+</body>
+</html>

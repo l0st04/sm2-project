@@ -1,0 +1,269 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+}
+
+body {
+    margin: 0;
+    background-color: black;
+}
+
+.nav-bar {
+    border: 1px black solid;
+    z-index: 100;
+    height: 88px;
+    position: fixed;
+    min-width: 100%;
+    background-color: black;
+    margin-top: -88px;
+}
+
+#nav-logo {
+    height: 92px;
+    margin-left: 40px;
+}
+
+.nav-bar-items {
+    float: right;
+    margin-right: 50px;
+    margin-top: 40px;
+    text-decoration: none;
+    color: white;
+    font-weight: bolder;
+}
+
+.nav-bar-items:hover {
+    text-shadow: white 0 0 15px;
+}
+
+/* Navigation Bar ^ */
+
+#center-div {
+    margin: 0 auto;
+    width: fit-content;
+    height: fit-content;
+}
+
+.first-pannel {
+    border: 1px solid black;
+    background-image: url(Images/main-background.png);
+    background-position: center;
+    background-size: contain;
+    height: 730px;
+    margin-top: 88px;
+}
+
+#text-align {
+    margin: 270px 70px;
+}
+
+#blue-line1 {
+    width: 200px;
+    height: 8px;
+    background-color: aqua;
+    margin-top: -20px;
+}
+
+#new-toys-div {
+    display: block;
+}
+
+#new-toys {
+    font-weight: bolder;
+    margin-top: 115px;
+}
+
+#blue-line2 {
+    width: 250px;
+    height: 8px;
+    background-color: aqua;
+}
+
+#p2 {
+    font-size: 15px;
+}
+
+#weapons {
+    display: inline;
+    width: 540px;
+    margin-left: 560px;
+    margin-top: -210px;
+}
+
+#crazy-maps-div {
+    display: block;
+}
+
+#crazy-maps {
+    font-weight: bolder;
+}
+
+#blue-line3 {
+    width: 250px;
+    height: 8px;
+    background-color: aqua;
+}
+
+#p3 {
+    font-size: 15px;
+}
+
+#maps {
+    margin-top: 50px;
+    width: 540px;
+}
+
+#crazy-maps-align {
+    margin-left: 580px;
+    margin-top: -250px;
+}
+
+#controller-div {
+    display: block;
+}
+
+#controller-support {
+    font-weight: bolder;
+}
+
+#blue-line4 {
+    width: 250px;
+    height: 8px;
+    background-color: aqua;
+}
+
+#p4 {
+    font-size: 15px;
+}
+
+#controller {
+    float: right;
+    margin-top: -250px;
+    margin-right: 13px;
+    width: 540px;
+}
+
+#controller-align {
+    margin-right: 500px;
+    margin-top: 340px;
+}
+
+#youtube {
+    align-items: center;
+}
+
+#gameplay {
+    margin-top: 180px;
+    text-align: center;
+    font-weight: bolder;
+}
+
+#blue-line5 {
+    width: 300px;
+    height: 8px;
+    background-color: aqua;
+    margin-left: 37%;
+    margin-top: 40px;
+}
+
+#gameplay-text {
+    text-align: center;
+    margin-top: 40px;
+    font-size: larger;
+}
+
+#news {
+    align-items: center;
+}
+
+#news {
+    font-weight: bolder;
+    text-align: center;
+    margin-top: 80px;
+}
+
+#blue-line6 {
+    width: 320px;
+    height: 8px;
+    background-color: aqua;
+    margin-top: 40px;
+    margin-left: 36%;
+}
+
+#news-text {
+    margin-top: 40px;
+    font-size: larger;
+}
+
+#end-div {
+    display: inline;
+    margin-top: 40px;
+}
+
+#div-100k {
+    margin-top: 60px;
+    text-align: center;
+    margin-left: -800px;
+}
+
+.end-h1 {
+    text-align: center;
+    font-size: 30px;
+    text-decoration: none;
+}
+
+.end-h1:hover {
+    color: aqua;
+}
+
+.end-text {
+    text-align: center;
+}
+
+.blue-lines-end {
+    width: 180px;
+    height: 8px;
+    background-color: aqua;
+    display: inline-block;
+}
+
+.read-more {
+    font-weight: bolder;
+    display: block;
+    margin-top: 20px;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+.read-more:hover {
+    text-shadow: white 0 0 15px;
+}
+
+.fa-caret-right {
+    margin-left: 10px;
+}
+
+#div-devblog {
+    text-align: center;
+    margin-top: -230px;
+}
+
+#div-weapons {
+    margin-left: 770px;
+    margin-top: -250px;
+    text-align: center;
+}
+
+/* Last text */
+
+#last-text {
+    text-align: center;
+}
+
+.last-links {
+    text-decoration: none;
+}
+
+.last-links:hover {
+    color: aqua;
+}
